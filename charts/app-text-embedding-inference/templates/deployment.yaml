@@ -1,0 +1,121 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "app.fullname" . }}
+  labels:
+    {{- include "app.labels" . | nindent 4 }}
+spec:
+  replicas: {{ .Values.replicaCount }}
+  selector:
+    matchLabels:
+      {{- include "app.selectorLabels" . | nindent 6 }}
+  strategy:
+    rollingUpdate:
+      maxSurge: 1
+      maxUnavailable: 0
+    type: RollingUpdate
+  template:
+    metadata:
+      {{- with .Values.podAnnotations }}
+      annotations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      labels:
+        {{- include "app.labels" . | nindent 8 }}
+    spec:
+      {{- with .Values.image.imagePullSecrets }}
+      imagePullSecrets:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- if .Values.modelDownload.initEnabled }}
+      initContainers:
+        - name: download-model
+          image: "{{ .Values.modelDownload.image.repository }}:{{ .Values.modelDownload.image.tag }}"
+          volumeMounts:
+            {{- if .Values.HFCacheVolume.enabled }}
+            - name: huggingface-cache
+              mountPath: /root/.cache/huggingface
+            {{- end }}
+          env:
+          {{- range $k, $v := .Values.env }}
+            - name: {{ $k }}
+              value: {{ $v | quote }}
+          {{- end }}
+          command: ["huggingface-cli"]
+          args:
+            - download
+            - --resume-download
+            - --repo-type=model
+            {{- if .Values.model.modelRevision }}
+            - --revision={{ .Values.model.modelRevision }}
+            {{- end }}
+            - "{{ .Values.model.modelHFName }}"
+      {{- end }}
+      containers:
+        - name: {{ .Chart.Name }}
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          ports:
+            - name: http
+              containerPort: {{ .Values.service.port }}
+              protocol: TCP
+          livenessProbe:
+            initialDelaySeconds: {{ .Values.healthChecksDelay }}
+            httpGet:
+              path: /health
+              port: http
+          readinessProbe:
+            initialDelaySeconds: {{ .Values.healthChecksDelay }}
+            httpGet:
+              path: /health
+              port: http
+          resources:
+            {{- toYaml .Values.resources | nindent 12 }}
+          volumeMounts:
+            - mountPath: /dev/shm
+              name: dshm
+            {{- if .Values.HFCacheVolume.enabled }}
+            - name: huggingface-cache
+              mountPath: /huggingface-cache
+            {{- end }}
+          env:
+            - name: HUGGINGFACE_HUB_CACHE
+              value: /huggingface-cache
+          {{- range $k, $v := .Values.env }}
+            - name: {{ $k }}
+              value: {{ $v | quote }}
+          {{- end }}
+          args:
+            - --host=0.0.0.0
+            - --port={{ .Values.service.port }}
+            - --model-id={{ .Values.model.modelHFName }}
+            {{- if .Values.model.modelRevision }}
+            - --revision={{ .Values.model.modelRevision }}
+            {{- end }}
+          {{- with .Values.serverExtraArgs -}}
+          {{- toYaml . | nindent 12 }}
+          {{- end }}
+      volumes:
+        - name: dshm
+          emptyDir:
+            medium: Memory
+      {{- if .Values.HFCacheVolume.enabled }}
+        - name: huggingface-cache
+          persistentVolumeClaim:
+            claimName: {{ include "app.fullname" . }}-cache
+      {{- end }}
+      {{- with .Values.nodeSelector }}
+      nodeSelector:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.affinity }}
+      affinity:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.tolerations }}
+      tolerations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- if .Values.priorityClassName }}
+      priorityClassName: {{ .Values.priorityClassName }}
+      {{- end }}
