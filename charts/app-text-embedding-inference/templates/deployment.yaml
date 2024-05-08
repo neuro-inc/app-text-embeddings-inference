@@ -86,7 +86,7 @@ spec:
               value: {{ $v | quote }}
           {{- end }}
           args:
-            - --host=0.0.0.0
+            - --hostname=0.0.0.0
             - --port={{ .Values.service.port }}
             - --model-id={{ .Values.model.modelHFName }}
             {{- if .Values.model.modelRevision }}
