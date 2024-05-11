@@ -13,7 +13,8 @@ neuro run --pass-config image:app-deployment -- install https://github.com/neuro
   --set "resources.requests.memory=4Gi" \
   --set "resources.requests.nvidia\.com/gpu=1" \
   --set "resources.limits.nvidia\.com/gpu=1" \
-  --set "nodeSelector.platform\.neuromation\.io/nodepool=gpu-2x-3090-2xnvidia-geforce-rtx-3090" ## node pool specific for onprem-poc cluster
+  --set "nodeSelector.platform\.neuromation\.io/nodepool=gpu-2x-3090-2xnvidia-geforce-rtx-3090" \
+  --set 'serverExtraArgs[0]=--max-client-batch-size=100'
 ```
 
 
