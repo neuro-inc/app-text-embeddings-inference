@@ -2,8 +2,22 @@
 
 Deploy HuggingFace's 🤗 [text-embedding-inference](https://github.com/huggingface/text-embeddings-inference) Apolo app.
 
+## Platform deploymet example:
+This example deploys `nomic-ai/nomic-embed-text-v1` embeddings model.
 
-Important configurations (helm values):
+```yaml
+neuro run --pass-config image:app-deployment -- install https://github.com/neuro-inc/app-text-embeddings-inference \
+  embeddings tei charts/app-text-embedding-inference \
+  --set "model.modelHFName=nomic-ai/nomic-embed-text-v1" \
+  --set "resources.requests.cpu=1" \
+  --set "resources.requests.memory=4Gi" \
+  --set "resources.requests.nvidia\.com/gpu=1" \
+  --set "resources.limits.nvidia\.com/gpu=1" \
+  --set "nodeSelector.platform\.neuromation\.io/nodepool=gpu-2x-3090-2xnvidia-geforce-rtx-3090" ## node pool specific for onprem-poc cluster
+```
+
+
+# Important configs (helm values):
 ```yaml
 model: # Defines which model to serve
   modelHFName: ""
