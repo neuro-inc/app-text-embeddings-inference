@@ -6,8 +6,9 @@ Deploy HuggingFace's 🤗 [text-embedding-inference](https://github.com/huggingf
 This example deploys `nomic-ai/nomic-embed-text-v1` embeddings model.
 
 ```yaml
-neuro run --pass-config image:app-deployment -- install https://github.com/neuro-inc/app-text-embeddings-inference \
-  embeddings tei charts/app-text-embedding-inference \
+neuro run --pass-config ghcr.io/neuro-inc/app-deployment -- install https://github.com/neuro-inc/app-text-embeddings-inference \
+  text-embeddings-inference tei charts/app-text-embedding-inference \
+  --set timeout=600 \
   --set "model.modelHFName=nomic-ai/nomic-embed-text-v1" \
   --set "resources.requests.cpu=1" \
   --set "resources.requests.memory=4Gi" \

@@ -18,7 +18,7 @@ image:
 
 resources: {}
 
-healthChecksDelay: 300
+healthChecksDelay: 30
 
 HFCacheVolume:
   enabled: true
