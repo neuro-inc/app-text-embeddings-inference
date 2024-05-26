@@ -1,0 +1,20 @@
+image:
+  tag: hopper-1.2.3
+
+model:
+  modelHFName: "nomic-ai/nomic-embed-text-v1"
+
+resources:
+  requests:
+    cpu: 1
+    memory: 4Gi
+    nvidia.com/gpu: 1
+  limits:
+    nvidia.com/gpu: 1
+
+nodeSelector:
+  platform.neuromation.io/nodepool: dgx
+
+ingress:
+  enabled: true
+  clusterName: scottdc
