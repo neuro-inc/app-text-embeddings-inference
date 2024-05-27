@@ -14,8 +14,11 @@ neuro run --pass-config ghcr.io/neuro-inc/app-deployment -- install https://gith
   --set "resources.requests.memory=4Gi" \
   --set "resources.requests.nvidia\.com/gpu=1" \
   --set "resources.limits.nvidia\.com/gpu=1" \
-  --set "nodeSelector.platform\.neuromation\.io/nodepool=gpu-2x-3090-2xnvidia-geforce-rtx-3090" \
-  --set 'serverExtraArgs[0]=--max-client-batch-size=100'
+  --set "nodeSelector.platform\.neuromation\.io/nodepool=dgx" \
+  --set 'serverExtraArgs[0]=--max-client-batch-size=100' \
+  --set "image.tag=hopper-1.2.3" \
+  --set "ingress.enabled=True" \
+  --set "ingress.clusterName=scottdc"
 ```
 
 
