@@ -61,3 +61,5 @@ service:
 ingress:
   enabled: false
   clusterName: ""
+
+preset_name: ""
