@@ -10,15 +10,11 @@ apolo run --pass-config ghcr.io/neuro-inc/app-deployment -- install https://gith
   text-embeddings-inference tei charts/app-text-embedding-inference \
   --set timeout=600 \
   --set "model.modelHFName=nomic-ai/nomic-embed-text-v1" \
-  --set "resources.requests.cpu=1" \
-  --set "resources.requests.memory=4Gi" \
-  --set "resources.requests.nvidia\.com/gpu=1" \
-  --set "resources.limits.nvidia\.com/gpu=1" \
-  --set "nodeSelector.platform\.neuromation\.io/nodepool=dgx" \
   --set 'serverExtraArgs[0]=--max-client-batch-size=100' \
-  --set "image.tag=hopper-1.2.3" \
-  --set "ingress.enabled=True" \
-  --set "ingress.clusterName=scottdc"
+  --set "image.tag=hopper-1.2.3" \ # optional
+  --set "preset_name=H100x1" \  # set needed preset
+  --set "ingress.enabled=True" \ # optional
+  --set "ingress.clusterName=scottdc" # optional
 ```
 
 
