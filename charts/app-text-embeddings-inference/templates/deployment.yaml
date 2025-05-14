@@ -39,8 +39,12 @@ spec:
             {{- end }}
           env:
           {{- range $k, $v := .Values.env }}
-            - name: {{ $k }}
-              value: {{ $v | quote }}
+          - name: {{ $k }}
+            {{- if kindIs "string" $v }}
+            value: {{ $v | quote }}
+            {{- else }}
+            {{- $v | toYaml | nindent 12 }}
+            {{- end }}
           {{- end }}
           command: ["huggingface-cli"]
           args:
@@ -82,10 +86,14 @@ spec:
           env:
             - name: HUGGINGFACE_HUB_CACHE
               value: /huggingface-cache
-          {{- range $k, $v := .Values.env }}
+            {{- range $k, $v := .Values.env }}
             - name: {{ $k }}
+              {{- if kindIs "string" $v }}
               value: {{ $v | quote }}
-          {{- end }}
+              {{- else }}
+              {{ $v | toYaml | nindent 14 }}
+              {{- end }}
+            {{- end }}
           args:
             - --hostname=0.0.0.0
             - --port={{ .Values.service.port }}
