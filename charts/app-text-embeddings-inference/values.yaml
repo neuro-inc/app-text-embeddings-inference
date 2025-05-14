@@ -48,8 +48,8 @@ priorityClassName: ""
 modelDownload:
   initEnabled: true
   image:
-    repository: huggingface/downloader
-    tag: 0.17.3
+    repository: ghcr.io/neuro-inc/hf-downloader
+    tag: v25.4.0
     pullPolicy: IfNotPresent
   resources: {}
 
