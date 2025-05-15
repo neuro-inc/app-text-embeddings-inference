@@ -18,7 +18,19 @@ image:
 
 resources: {}
 
-healthChecksDelay: 30
+probe:
+  startup:
+    periodSeconds: 10    # probe every 10 s
+    failureThreshold: 60 # 10 min grace (60×10 s)
+    timeoutSeconds: 2
+  readiness:
+    periodSeconds: 10
+    failureThreshold: 3
+    timeoutSeconds: 2
+  liveness:
+    periodSeconds: 30
+    failureThreshold: 3
+    timeoutSeconds: 5
 
 HFCacheVolume:
   enabled: true
