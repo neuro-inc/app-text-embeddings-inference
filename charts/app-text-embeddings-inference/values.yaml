@@ -20,7 +20,7 @@ resources: {}
 
 probe:
   startup:
-    periodSeconds: 10    # probe every 10 s
+    periodSeconds: 10 # probe every 10 s
     failureThreshold: 60 # 10 min grace (60×10 s)
     timeoutSeconds: 2
   readiness:
@@ -61,7 +61,7 @@ modelDownload:
   initEnabled: true
   image:
     repository: ghcr.io/neuro-inc/hf-downloader
-    tag: v25.4.0
+    tag: v25.7.0
     pullPolicy: IfNotPresent
   resources: {}
 
