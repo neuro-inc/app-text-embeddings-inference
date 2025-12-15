@@ -8,8 +8,10 @@ SHELL := /bin/sh -e
 
 .PHONY: install
 install:
-	pip install pre-commit;
-	pre-commit install;
+	poetry config virtualenvs.in-project true
+	poetry install --with dev
+	poetry run pre-commit install;
+
 
 .PHONY: lint format
 lint format:
