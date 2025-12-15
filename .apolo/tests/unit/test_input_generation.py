@@ -7,7 +7,7 @@ from apolo_app_types_fixtures.constants import (
     APP_SECRETS_NAME,
 )
 from apolo_apps_text_embeddings_inference.inputs_processor import (
-    TextEmbeddingsInputsProcessor,
+    TextEmbeddingsInferenceInputsProcessor,
 )
 from apolo_apps_text_embeddings_inference.types import (
     TextEmbeddingsInferenceAppInputs,
@@ -42,7 +42,7 @@ async def test_tei_values_generation(setup_clients):
 
         mock_get_preset.side_effect = return_cpu_preset
 
-        processor = TextEmbeddingsInputsProcessor(client=setup_clients)
+        processor = TextEmbeddingsInferenceInputsProcessor(client=setup_clients)
         helm_params = await processor.gen_extra_values(
             input_=TextEmbeddingsInferenceAppInputs(
                 preset=Preset(name="cpu-small"),
@@ -432,7 +432,7 @@ async def test_tei_dynamic_image_selection_a100(setup_clients):
 
         mock_get_preset.side_effect = return_a100_preset
 
-        processor = TextEmbeddingsInputsProcessor(client=setup_clients)
+        processor = TextEmbeddingsInferenceInputsProcessor(client=setup_clients)
         helm_params = await processor.gen_extra_values(
             input_=TextEmbeddingsInferenceAppInputs(
                 preset=Preset(name="a100-large"),
@@ -494,7 +494,7 @@ async def test_tei_dynamic_image_selection_t4(setup_clients):
 
         mock_get_preset.side_effect = return_t4_preset
 
-        processor = TextEmbeddingsInputsProcessor(client=setup_clients)
+        processor = TextEmbeddingsInferenceInputsProcessor(client=setup_clients)
         helm_params = await processor.gen_extra_values(
             input_=TextEmbeddingsInferenceAppInputs(
                 preset=Preset(name="t4-medium"),
@@ -537,7 +537,7 @@ async def test_tei_dynamic_image_selection_cpu(setup_clients):
 
         mock_get_preset.side_effect = return_cpu_preset
 
-        processor = TextEmbeddingsInputsProcessor(client=setup_clients)
+        processor = TextEmbeddingsInferenceInputsProcessor(client=setup_clients)
         helm_params = await processor.gen_extra_values(
             input_=TextEmbeddingsInferenceAppInputs(
                 preset=Preset(name="cpu-large"),
