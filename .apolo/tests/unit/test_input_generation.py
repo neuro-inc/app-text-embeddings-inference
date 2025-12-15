@@ -6,6 +6,13 @@ from apolo_app_types_fixtures.constants import (
     APP_ID,
     APP_SECRETS_NAME,
 )
+from apolo_apps_text_embeddings_inference.inputs_processor import (
+    TextEmbeddingsInputsProcessor,
+)
+from apolo_apps_text_embeddings_inference.types import (
+    TextEmbeddingsInferenceAppInputs,
+    TextEmbeddingsInferenceArchitecture as TEIArch,
+)
 from apolo_sdk import Preset as ApoloPreset
 from apolo_sdk._server_cfg import AMDGPUPreset, NvidiaGPUPreset
 
@@ -16,13 +23,6 @@ from apolo_app_types.helm.apps.text_embeddings import (
     _get_tei_image_for_architecture,
 )
 from apolo_app_types.protocols.common import ApoloSecret, IngressHttp, Preset
-from apolo_apps_text_embeddings_inference.inputs_processor import (
-    TextEmbeddingsInputsProcessor,
-)
-from apolo_apps_text_embeddings_inference.types import (
-    TextEmbeddingsInferenceAppInputs,
-    TextEmbeddingsInferenceArchitecture as TEIArch,
-)
 
 
 @pytest.mark.asyncio
@@ -560,4 +560,3 @@ async def test_tei_dynamic_image_selection_cpu(setup_clients):
             "repository": TEI_IMAGE_REPOSITORY,
             "tag": "cpu-1.7",
         }
-

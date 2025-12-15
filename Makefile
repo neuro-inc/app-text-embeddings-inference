@@ -50,5 +50,5 @@ push-hook-image:
 
 .PHONY: gen-types-schemas
 gen-types-schemas:
-	app-types dump-types-schema .apolo/src/apolo_apps_text_embeddings_inference TextEmbeddingsInferenceAppInputs .apolo/src/apolo_apps_text_embeddings_inference/schemas/TextEmbeddingsInputs.json
-	app-types dump-types-schema .apolo/src/apolo_apps_text_embeddings_inference TextEmbeddingsInferenceAppOutputs .apolo/src/apolo_apps_text_embeddings_inference/schemas/TextEmbeddingsOutputs.json
+	app-types dump-types-schema .apolo/src/apolo_apps_text_embeddings_inference TextEmbeddingsInferenceAppInputs .apolo/src/apolo_apps_text_embeddings_inference/schemas/TextEmbeddingsInferenceInputs.json
+	app-types dump-types-schema .apolo/src/apolo_apps_text_embeddings_inference TextEmbeddingsInferenceAppOutputs .apolo/src/apolo_apps_text_embeddings_inference/schemas/TextEmbeddingsInferenceOutputs.json

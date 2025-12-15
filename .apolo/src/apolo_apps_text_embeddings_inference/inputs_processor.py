@@ -190,7 +190,7 @@ def _get_tei_image_for_architecture(
     )
 
 
-class TextEmbeddingsInputsProcessor(
+class TextEmbeddingsInferenceInputsProcessor(
     BaseChartValueProcessor[TextEmbeddingsInferenceAppInputs]
 ):
     def __init__(self, *args: t.Any, **kwargs: t.Any):
@@ -286,4 +286,3 @@ class TextEmbeddingsInputsProcessor(
                 values,
             ]
         )
-

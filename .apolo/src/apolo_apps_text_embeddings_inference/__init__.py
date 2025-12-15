@@ -1,5 +1,9 @@
-from apolo_apps_text_embeddings_inference.inputs_processor import TextEmbeddingsInputsProcessor 
-from apolo_apps_text_embeddings_inference.outputs_processor import TextEmbeddingsOutputProcessor
+from apolo_apps_text_embeddings_inference.inputs_processor import (
+    TextEmbeddingsInferenceInputsProcessor,
+)
+from apolo_apps_text_embeddings_inference.outputs_processor import (
+    TextEmbeddingsInferenceOutputProcessor,
+)
 from apolo_apps_text_embeddings_inference.types import (
     TextEmbeddingsInferenceAppInputs,
     TextEmbeddingsInferenceAppOutputs,
@@ -7,9 +11,8 @@ from apolo_apps_text_embeddings_inference.types import (
 
 
 __all__ = [
-    "TextEmbeddingsInputsProcessor",
-    "TextEmbeddingsOutputProcessor",
+    "TextEmbeddingsInferenceInputsProcessor",
+    "TextEmbeddingsInferenceOutputProcessor",
     "TextEmbeddingsInferenceAppInputs",
     "TextEmbeddingsInferenceAppOutputs",
 ]
-

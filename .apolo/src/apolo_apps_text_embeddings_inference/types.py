@@ -76,4 +76,3 @@ class TextEmbeddingsInferenceAppInputs(AppInputs):
 class TextEmbeddingsInferenceAppOutputs(AppOutputs):
     internal_api: OpenAICompatEmbeddingsAPI | None = None
     external_api: OpenAICompatEmbeddingsAPI | None = None
-

@@ -2,12 +2,11 @@ import typing as t
 
 from apolo_app_types import HuggingFaceModel
 from apolo_app_types.clients.kube import get_service_host_port
+from apolo_app_types.outputs.base import BaseAppOutputsProcessor
 from apolo_app_types.outputs.common import INSTANCE_LABEL
 from apolo_app_types.outputs.utils.ingress import get_ingress_host_port
 from apolo_app_types.protocols.common.openai_compat import OpenAICompatEmbeddingsAPI
 from apolo_apps_text_embeddings_inference.types import TextEmbeddingsInferenceAppOutputs
-from apolo_app_types.outputs.base import BaseAppOutputsProcessor
-
 
 
 async def get_tei_outputs(
@@ -45,11 +44,13 @@ async def get_tei_outputs(
         external_api=external_api,
     )
 
-class TextEmbeddingsOutputProcessor(BaseAppOutputsProcessor[TextEmbeddingsInferenceAppOutputs]):
+
+class TextEmbeddingsInferenceOutputProcessor(
+    BaseAppOutputsProcessor[TextEmbeddingsInferenceAppOutputs]
+):
     async def _generate_outputs(
         self,
         helm_values: dict[str, t.Any],
         app_instance_id: str,
     ) -> TextEmbeddingsInferenceAppOutputs:
         return await get_tei_outputs(helm_values, app_instance_id)
-

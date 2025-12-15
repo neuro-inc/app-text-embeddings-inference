@@ -1,11 +1,12 @@
 import pytest
-
 from apolo_apps_text_embeddings_inference.types import get_tei_outputs
 
 
 @pytest.mark.asyncio
 async def test_tei_outputs(setup_clients, mock_kubernetes_client, app_instance_id):
-    res = (await get_tei_outputs(helm_values={}, app_instance_id=app_instance_id)).model_dump()
+    res = (
+        await get_tei_outputs(helm_values={}, app_instance_id=app_instance_id)
+    ).model_dump()
 
     assert res["internal_api"]["host"] == "app.default-namespace"
     assert res["internal_api"]["port"] == 80
@@ -20,14 +21,16 @@ async def test_tei_outputs(setup_clients, mock_kubernetes_client, app_instance_i
 async def test_tei_outputs_with_model(
     setup_clients, mock_kubernetes_client, app_instance_id
 ):
-    res = (await get_tei_outputs(
-        helm_values={
-            "model": {
-                "modelHFName": "random/name",
+    res = (
+        await get_tei_outputs(
+            helm_values={
+                "model": {
+                    "modelHFName": "random/name",
+                },
             },
-        },
-        app_instance_id=app_instance_id,
-    )).model_dump()
+            app_instance_id=app_instance_id,
+        )
+    ).model_dump()
 
     assert res["internal_api"]["host"] == "app.default-namespace"
     assert res["internal_api"]["port"] == 80
@@ -48,4 +51,3 @@ async def test_tei_outputs_with_model(
         "model_hf_name": "random/name",
         "__type__": "HuggingFaceModel",
     }
-
