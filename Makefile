@@ -1,5 +1,5 @@
 HOOK_IMAGE_NAME ?= mlops-app-text-embeddings-inference
-HOOK_IMAGE_TAG := latest
+HOOK_IMAGE_TAG ?= latest
 
 .PHONY: all clean test lint format
 all clean test lint format:
