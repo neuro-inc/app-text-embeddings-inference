@@ -53,7 +53,7 @@ jobs:
           restore-keys: |
             poetry-
       - name: install dependencies
-        run: make setup
+        run: make install
       - name: run unit tests
         run: make test-unit
 
