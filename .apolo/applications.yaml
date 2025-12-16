@@ -7,12 +7,12 @@
   app_package_name: apolo_apps_text_embeddings_inference
   inputs:
     schema_path: .apolo/src/apolo_apps_text_embeddings_inference/schemas/TextEmbeddingsInferenceInputs.json
-    types_name: TextEmbeddingsInferenceInputs
+    types_name: TextEmbeddingsInferenceAppInputs
     processor: TextEmbeddingsInferenceInputsProcessor
     image: ghcr.io/neuro-inc/mlops-app-text-embeddings-inference
   outputs:
     schema_path: .apolo/src/apolo_apps_text_embeddings_inference/schemas/TextEmbeddingsInferenceOutputs.json
-    types_name: TextEmbeddingsInferenceOutputs
+    types_name: TextEmbeddingsInferenceAppOutputs
     processor: TextEmbeddingsInferenceOutputsProcessor
     image: ghcr.io/neuro-inc/mlops-app-text-embeddings-inference
   short_description: A blazing fast inference solution for text embeddings models.

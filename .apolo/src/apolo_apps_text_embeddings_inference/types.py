@@ -2,9 +2,8 @@ from enum import StrEnum
 
 from pydantic import Field
 
-from apolo_app_types import AppInputs, AppOutputs
+from apolo_app_types import AppInputs
 from apolo_app_types.protocols.common import (
-    AbstractAppFieldType,
     HuggingFaceModel,
     IngressHttp,
     Preset,
@@ -13,7 +12,7 @@ from apolo_app_types.protocols.common import (
 )
 from apolo_app_types.protocols.common.hugging_face import HF_SCHEMA_EXTRA
 from apolo_app_types.protocols.common.k8s import Env
-from apolo_app_types.protocols.common.openai_compat import OpenAICompatEmbeddingsAPI
+from apolo_app_types.protocols.text_embeddings import TextEmbeddingsInferenceAppOutputs
 
 
 class TextEmbeddingsInferenceArchitecture(StrEnum):
@@ -32,10 +31,6 @@ class TextEmbeddingsInferenceImageTag(StrEnum):
     AMPERE_86 = "86-1.7"
     ADA_LOVELACE = "89-1.7"
     HOPPER = "hopper-1.7"
-
-
-class Image(AbstractAppFieldType):
-    tag: str
 
 
 class TextEmbeddingsInferenceAppInputs(AppInputs):
@@ -73,6 +68,9 @@ class TextEmbeddingsInferenceAppInputs(AppInputs):
     )
 
 
-class TextEmbeddingsInferenceAppOutputs(AppOutputs):
-    internal_api: OpenAICompatEmbeddingsAPI | None = None
-    external_api: OpenAICompatEmbeddingsAPI | None = None
+__all__ = [
+    "TextEmbeddingsInferenceAppInputs",
+    "TextEmbeddingsInferenceAppOutputs",
+    "TextEmbeddingsInferenceArchitecture",
+    "TextEmbeddingsInferenceImageTag",
+]
