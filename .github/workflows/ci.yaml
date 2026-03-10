@@ -2,10 +2,10 @@ name: CI
 
 on:
   push:
-    branches: [apolo]
+    branches: [master]
     tags: ["v*"]
   pull_request:
-    branches: [apolo]
+    branches: [master]
   schedule:
     - cron: 0 4 * * *
 
