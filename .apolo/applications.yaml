@@ -18,9 +18,6 @@
   short_description: A blazing fast inference solution for text embeddings models.
   description: |
     Text Embeddings Inference (TEI) is a toolkit for deploying and serving open source text embeddings and sequence classification models. TEI enables high-performance extraction for the most popular models
-    Resource sizing options:
-    - Lean (dev/test): 0.2 vCPU, 256 MiB RAM
-    - Balanced (prod): 0.5 vCPU, 512 MiB RAM
   pub_date: "2025-04-10T00:00:00+00:00"
   logo: https://storage.googleapis.com/development-421920-assets/app-logos/hugging-face.svg
   tags: ["Embeddings", "Text", "Inference"]

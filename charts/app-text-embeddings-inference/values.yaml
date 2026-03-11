@@ -63,10 +63,7 @@ modelDownload:
     repository: ghcr.io/neuro-inc/hf-downloader
     tag: v25.7.0
     pullPolicy: IfNotPresent
-  resources:
-    requests:
-      cpu: 200m
-      memory: 256Mi
+  resources: {}
 
 # Service
 service:
