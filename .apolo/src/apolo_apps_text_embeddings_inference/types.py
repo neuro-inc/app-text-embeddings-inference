@@ -34,7 +34,15 @@ class TextEmbeddingsInferenceImageTag(StrEnum):
 
 
 class TextEmbeddingsInferenceAppInputs(AppInputs):
-    preset: Preset
+    preset: Preset = Field(
+        ...,
+        json_schema_extra=SchemaExtraMetadata(
+            title="Text Embeddings Inference preset",
+            description="Select the resource preset used for the "
+            "Huggingface's text-embedding-inference instance. "
+            "Minimal resources: 2 CPU cores, 4 GiB memory, 1 GPU with 16 GiB memory.",
+        ).as_json_schema_extra(),
+    )
     ingress_http: IngressHttp | None = Field(
         default=None,
         title="Enable HTTP Ingress",
