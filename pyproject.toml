@@ -7,7 +7,7 @@ authors = [
 ]
 readme = "README.md"
 dynamic = ["version"]
-requires-python = ">=3.11.0,<4.0"
+requires-python = ">=3.13.0,<4.0"
 
 [tool.poetry]
 name = "apolo-apps-text_embeddings_inference"
@@ -23,27 +23,26 @@ pyyaml = "^6.0.2"
 types-PyYAML = "^6.0.12.20241230"
 yarl = "^1.18.3"
 apolo-app-types = "^26.10.3"
-pre-commit = "^4.2.0"
 multidict = "^6.6.4"
 
 [tool.poetry.group.dev]
 optional = true
 
 [tool.poetry.group.dev.dependencies]
-pre-commit = "^4.0.1"
-pytest = "^8.3.4"
-pytest-asyncio = "^0.25.3"
-pytest-cov = "^6.2.1"
-mypy = "^1.17.1"
+pre-commit = "^4.7.0"
+pytest = "^9.2.0"
+pytest-asyncio = "^1.4.1"
+pytest-cov = "^7.1.0"
+mypy = "^2.4.1"
 
 [tool.ruff]
-target-version = "py311"
+target-version = "py313"
 lint.select = [
     "E", "F", "I", "C90", "UP", "B", "ASYNC", "N", "FBT", "A", "C4", "EM", "FA", "ICN",
     "G", "PIE", "T20", "PYI", "PT", "RET", "PTH"
 ]
 lint.ignore = [
-  "A003",  # Class attribute "..." is shadowing a Python builtin
+  "A003",
   "N818"
 ]
 
@@ -53,7 +52,6 @@ ApoloSDK = ["apolo-sdk"]
 [tool.ruff.lint.isort]
 combine-as-imports = true
 lines-after-imports = 2
-#profile = "black"
 section-order = ["future", "standard-library", "third-party", "ApoloSDK", "first-party", "local-folder"]
 known-first-party = ["apolo_app_types"]
 known-local-folder = ["tests"]
@@ -73,36 +71,12 @@ exclude = [
 ]
 
 
-[[tool.mypy.overrides]]
-module = "pytest"
-ignore_missing_imports = true
-
-
-[tool.flake8]
-extend-exclude = [
-  ".git",
-  ".env",
-  "__pycache__",
-  ".eggs",
-]
-max-line-length = 88
-extend-ignore = [
-  "N801",
-  "N802",
-  "N803",
-  "E252",
-  "W503", # line break before binary operator (conflicts with Black)
-  "E133",
-  "E203", # whitespace before ':' (conflicts with Black)
-  "F541",
-]
-
 [tool.coverage.report]
 fail_under = 0
 skip_empty = true
 sort = "-cover"
 omit = [
-    "./apolo/tests/*",
+    ".apolo/tests/*",
 ]
 
 [tool.pytest.ini_options]
@@ -112,5 +86,5 @@ log_cli = false
 log_level = "INFO"
 junit_family = "xunit2"
 testpaths = [
-  "./apolo/tests/",
+  ".apolo/tests/",
 ]
