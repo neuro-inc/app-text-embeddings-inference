@@ -7,21 +7,20 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout commit
-        uses: actions/checkout@v4
+        uses: actions/checkout@v7
       - name: Install python
-        uses: actions/setup-python@v5
+        uses: actions/setup-python@v7
         with:
           python-version-file: .python-version
-          cache: pip
-      - uses: actions/cache@v4
-        name: Define a cache for the virtual environment based on the dependencies lock file
+      - name: Cache pre-commit hooks
+        uses: actions/cache@v6
         with:
-          path: ./.venv
-          key: venv-${{ hashFiles('.pre-commit-config.yaml') }}
+          path: ~/.cache/pre-commit
+          key: pre-commit|${{ hashFiles('.python-version', '.pre-commit-config.yaml') }}
       - name: Install Poetry
         run: pip install poetry
       - name: Setup Python dependencies cache
-        uses: actions/cache@v4
+        uses: actions/cache@v6
         with:
           path: ~/.cache/pypoetry
           key: poetry-${{ hashFiles('**/poetry.lock') }}
@@ -30,38 +29,50 @@ jobs:
       - name: Install dependencies
         run: make install
       - name: Lint
-        run: make lint
-
+        run: |
+          echo "::add-matcher::.github/actionlint-matcher.json"
+          make lint
   test-unit:
-    name: unit tests
+    name: Unit tests
     runs-on: ubuntu-latest
     steps:
-      - name: checkout commit
-        uses: actions/checkout@v4
-      - name: install python
-        uses: actions/setup-python@v5
+      - name: Checkout commit
+        uses: actions/checkout@v7
+      - name: Install python
+        uses: actions/setup-python@v7
         with:
           python-version-file: .python-version
           cache: pip
-      - name: install poetry
+      - name: Install Poetry
         run: pip install poetry
-      - name: setup python dependencies cache
-        uses: actions/cache@v4
+      - name: Setup Python dependencies cache
+        uses: actions/cache@v6
         with:
           path: ~/.cache/pypoetry
-          key: poetry-${{ hashfiles('**/poetry.lock') }}
+          key: poetry-${{ hashFiles('**/poetry.lock') }}
           restore-keys: |
             poetry-
-      - name: install dependencies
-        run: make install
-      - name: run unit tests
+      - name: Install dependencies
+        run: make setup
+      - name: Run unit tests
         run: make test-unit
+  test-helm:
+    name: Helm chart
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout commit
+        uses: actions/checkout@v7
+      - name: Install helm
+        uses: azure/setup-helm@v5
+      - name: Lint and render the chart
+        run: make test-helm
 
   check:
     name: Check
     needs:
       - lint
       - test-unit
+      - test-helm
     runs-on: ubuntu-latest
     if: always()
     steps:
